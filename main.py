@@ -7,8 +7,8 @@ from PIL import Image
 def model_prediction(test_image):
     # Load our newly saved keras model
     model = tf.keras.models.load_model('crop_disease_detector_model.keras')
-    # Convert uploaded image to PIL Image and resize to model's expected input (160, 160)
-    image = Image.open(test_image).resize((160, 160))
+    # Convert uploaded image to PIL Image,convert to RGB and resize to model's expected input (160, 160)
+    image = Image.open(test_image).convert("RGB").resize((160, 160))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
     input_arr = np.array([input_arr]) # Convert single image to a batch
     prediction = model.predict(input_arr)
@@ -17,47 +17,44 @@ def model_prediction(test_image):
 
 #Sidebar
 st.sidebar.title("Dashboard")
-app_mode = st.sidebar.selectbox("Select Page",["Home & About","Crop Disease Detector"])
+app_mode = st.sidebar.selectbox("Select Page",["Home","Crop Disease Detector"])
 
-#Merged Home & About Page
-if(app_mode=="Home & About"):
+#Home Page
+if(app_mode=="Home"):
     st.header("CROP DISEASE DETECTOR")
     st.markdown("""
-    Welcome to the Crop Disease Detector!
+    Welcome Farmer!
     
-    Our mission is to help in identifying plant diseases efficiently. Upload an image of a plant, and our system will analyze it to detect any signs of diseases. Together, let's protect our crops and ensure a healthier harvest!
+    Our mission is to help you identify any crop diseases on your farm. 
+    Together, let's protect your crops and ensure you have a bountiful harvest!
 
-    ### How It Works
-    1. **Upload Image:** Go to the **Crop Disease Detector** page and upload an image of a plant with suspected diseases.
-    2. **Analysis:** Our system will process the image using advanced algorithms to identify potential diseases.
-    3. **Results:** View the results and recommendations for further action.
+    ### Here is how our Detector Works
+    1. **Upload your image** on the **Crop Disease Detector** page and click on "Diagnose"
+    2. **Wait for our Detector to analyze your image**...Takes a few seconds :)
+    3. **View the results and take the necessary actions**.
 
-    ### Why Choose Us?
-    - **Accuracy:** Our system utilizes state-of-the-art machine learning techniques for accurate disease detection.
-    - **User-Friendly:** Simple and intuitive interface for seamless user experience.
-    - **Fast and Efficient:** Receive results in seconds, allowing for quick decision-making.
+    ### Why use our Detector?
+    - **It is user-friendly**
+    - **It is fast and accurate** 
 
-    ### About the Dataset
-    This dataset is recreated using offline augmentation from the original dataset. The original dataset consists of about 61486 images of healthy and diseased crop leaves which is categorized into 39 different classes.
+    ### About
+    The dataset used was curated from Mendeley and it consists of **61486 images** of healthy and diseased crop leaves which is categorized into 39 different classes.
+    Our Model was trained with **49,179 images**, tested with **6,168 images** and validated with **6,139 images** with up to **98% accuracy** achieved. The project was handled by 4 techies from Techcrush 
+    Bootcamp AL/ML Track: Nnaemeka, Tega, Molly and Angel.
     
-    #### Dataset Content
-    - **Train:** 49,179 images
-    - **Validation:** 6,139 images
-    - **Test:** 6,168 images
 
-    ### Get Started
-    Click on the **Crop Disease Detector** page in the sidebar to upload an image and experience the power of our Crop Disease Detector!
+    ### Head over to the **Crop Disease Detector** page in the sidebar to get started!
 """)
 
-#Prediction Page
+# Detector Page
 elif(app_mode=="Crop Disease Detector"):
     st.header("Crop Disease Detector")
-    test_image = st.file_uploader("Choose an Image:")
-    if(test_image is not None and st.button("Show Image")):
+    test_image = st.file_uploader("Choose an Image:", type=["jpg", "jpeg", "png"])
+    if(test_image is not None and st.button("Show Uploaded Image")):
         st.image(test_image,width="stretch")
     #Predict Button
-    if(test_image is not None and st.button("Predict")):
-        with st.spinner("Please Wait.."):
+    if(test_image is not None and st.button("Diagnose")):
+        with st.spinner("Please Wait for the Results.."):
             st.write("Our Prediction")
             result_index = model_prediction(test_image)
             # Define Classes based on the dataset's class_names
