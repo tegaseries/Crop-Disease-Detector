@@ -4,7 +4,7 @@ Upload a photo of a single leaf and the app names the crop and its condition (he
 
 Capstone project, TechCrush AI/ML Bootcamp, Cohort 8 (Class A), October 2026.
 
-**Live app:** coming soon (Streamlit Community Cloud)
+**Live app:** https://crop-disease-detector-techcrush.streamlit.app (Streamlit Community Cloud)
 
 ## Results
 
