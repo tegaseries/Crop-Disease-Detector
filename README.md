@@ -65,11 +65,15 @@ Your browser then opens the app. Keep `main.py` and `crop_disease_detector_model
 | `requirements.txt` | The packages the app needs, at the versions it was tested with |
 | `Crop_Disease_Detector_Machine_Learning.ipynb` | The training notebook (Google Colab), with its saved outputs |
 
-## Known issues (version 1.0)
+## Versions
 
-- PNG images with a transparent background and black-and-white photos make the app stop with an error, because the upload is not converted to RGB before it reaches the model. A fix is planned for version 1.1.
+- **1.1:** every upload is converted to RGB, so PNG images with a transparent background and black-and-white photos now work (in 1.0 they stopped the app with an error). Only JPG and PNG files can be uploaded. The Home page text was rewritten, and the Predict button is now called Diagnose.
+- **1.0:** first version.
+
+## Known issues (version 1.1)
+
 - The app shows only the predicted class, without a confidence score, so an unsure guess looks the same as a sure one.
-- The model is loaded again on every click, which makes each prediction take a few seconds.
+- The model is loaded again on every click, which makes each diagnosis take several seconds.
 
 ## Crops and conditions covered
 
